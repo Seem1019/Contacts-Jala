@@ -7,6 +7,11 @@ namespace Contacts.Infrastructure.Validations
     {
         public ContactValidation()
         {
+            RuleFor(contact=> contact.UserId)
+                .NotEmpty()
+                .NotNull()
+                .WithMessage("userId cannot be empty or null"); ;
+                
             RuleFor(contact => contact.Name)
                 .NotNull()
                 .NotEmpty()

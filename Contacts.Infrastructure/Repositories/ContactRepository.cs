@@ -11,6 +11,11 @@ namespace Contacts.Infrastructure.Repositories
         {
         }
 
+        public async Task<IEnumerable<Contact>> GetAll(long id)
+        {
+            return await _entities.Where(x => x.UserId == id).ToListAsync();
+        }
+
         public async Task<Contact> FindByEmail(string email)
         {
             return await _entities.Where(x=> x.Email== email).FirstOrDefaultAsync();

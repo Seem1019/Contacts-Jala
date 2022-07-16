@@ -6,5 +6,6 @@ namespace Contacts.Core.Interfaces
     {
         Task<Contact> FindByEmail(string email);
         Task<Contact> FindByName(string name);
+        Task<IEnumerable<Contact>> GetAll(long id);
     }
 }

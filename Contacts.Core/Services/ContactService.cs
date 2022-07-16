@@ -37,7 +37,12 @@ namespace Contacts.Core.Services
             filters.PageNumber = filters.PageNumber == 0 ? _paginationOptions.DefaultPageNumber : filters.PageNumber;
             filters.PageSize = filters.PageSize == 0 ? _paginationOptions.DefaultPageSize : filters.PageSize;
 
-            var contacts = _unitOfWork.ContactRepository.GetAll();
+            if (filters.Id == 0)
+            {
+                throw new RequiredFieldException("Id is required");
+            } 
+
+            var contacts = _unitOfWork.ContactRepository.GetAll(filters.Id).Result;
 
             if (filters.Name != null)
             {

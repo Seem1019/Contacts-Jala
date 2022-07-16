@@ -31,7 +31,7 @@ namespace Contacts.UnitTest
         {
             public ReturnValue()
             {
-                _unitOfWorkMock.Setup(s => s.ContactRepository.FindByEmail("algo@algo.com"))
+                _unitOfWorkMock.Setup(s => s.ContactRepository.FindByEmail("stevene@algo.com"))
                     .Returns(
                         new Contact
                         {
@@ -40,7 +40,24 @@ namespace Contacts.UnitTest
                             UserId = new Random().NextInt64(),
                             Name = "Juan"
                         }.GetType).Verifiable();
+                _unitOfWorkMock.Setup(s => s.UserRepository.GetById(1))
+                    .Returns(
+                        new User
+                        {
+                            Id = 1,
+                            FullName = "juan",
+                            IsActive = true
+                        }
+                        .GetType).Verifiable();
             }
+        }
+        [Fact]
+        public async void getContactByEmail_EmailTest_ReturnContact()
+        {
+            //Arrange
+
+            //Act
+            //Asert
         }
 
         [Fact]
@@ -62,17 +79,18 @@ namespace Contacts.UnitTest
             };
             var contact = new Contact
             {
-                UserId = user.Id,
+                Id = 1,
+                UserId = 1,
                 Name = "pedro",
-                Email = "algo@algo.com"
+                Email = "stevene@algo.com"
             };
             user.Contacts.Add(contact);
 
             //Act
-            
-
-
+             Action action = async ()=>  await _contactServiceMock.InsertContact(contact);
             //Asert
+            Assert.Throws<DuplicatedContactException>(action);
+
             
 
         }
